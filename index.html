@@ -8,18 +8,20 @@
 
   <style>
     :root{
-      --bg:#070b14;
-      --panel:#0b1220;
-      --card:rgba(17,26,46,.65);
-      --line:rgba(35,49,80,.75);
-      --text:#e7eefc;
-      --muted:#a9b7d6;
-      --accent:#6ea8ff;
-      --accent2:#8bf0ff;
+      --bg:#0b1220;
+      --panel:rgba(255,255,255,.06);
+      --card:rgba(255,255,255,.08);
+      --line:rgba(255,255,255,.12);
+      --text:#eef4ff;
+      --muted:rgba(238,244,255,.72);
+
+      --accent:#4f8dff;
+      --accent2:#66f0ff;
+
+      --shadow: 0 14px 40px rgba(0,0,0,.22);
+      --r:18px;
       --ok:#7CFFA7;
       --warn:#ffd36e;
-      --shadow: 0 14px 40px rgba(0,0,0,.35);
-      --r:18px;
     }
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
@@ -28,9 +30,9 @@
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
       color:var(--text);
       background:
-        radial-gradient(900px 420px at 20% -10%, rgba(110,168,255,.22), transparent 60%),
-        radial-gradient(700px 420px at 95% 10%, rgba(139,240,255,.14), transparent 55%),
-        linear-gradient(180deg, #060a12 0%, #0b1220 45%, #060a12 100%);
+        radial-gradient(1200px 520px at 10% -10%, rgba(79,141,255,.16), transparent 60%),
+        radial-gradient(900px 520px at 100% 0%, rgba(102,240,255,.10), transparent 55%),
+        linear-gradient(180deg, #0b1220 0%, #111b33 45%, #0b1220 100%);
     }
     a{color:var(--accent);text-decoration:none}
     a:hover{text-decoration:underline}
@@ -51,6 +53,14 @@
       background: linear-gradient(135deg, rgba(110,168,255,.75), rgba(139,240,255,.55));
       box-shadow: 0 10px 30px rgba(110,168,255,.18);
       border:1px solid rgba(255,255,255,.10);
+    }
+    .brand-logo{
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      object-fit: cover;
+      display: block;
+      box-shadow: 0 6px 18px rgba(0,0,0,.25);
     }
     .brand b{font-size:14px}
     .brand span{display:block;font-size:12px;color:var(--muted)}
@@ -125,18 +135,159 @@
       grid-column:span 12;
       padding:16px;
       border-radius:16px;
-      border:1px solid rgba(35,49,80,.60);
-      background: rgba(17,26,46,.55);
-      box-shadow: 0 10px 30px rgba(0,0,0,.22);
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.10);
+      box-shadow: 0 10px 30px rgba(0,0,0,.18);
     }
     .card b{display:block;font-size:14px;margin-bottom:6px}
     .muted{color:var(--muted);font-size:13px;line-height:1.6}
+
+    /* ===== Photo thumbnails (no giant banners) ===== */
+    .thumb-wide{
+      width:100%;
+      height: 160px;
+      border-radius: 14px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.05);
+      box-shadow: 0 10px 26px rgba(0,0,0,.18);
+    }
+    .thumb-wide img{
+      width:100%;
+      height:100%;
+      object-fit: cover;
+      object-position: center 20%;
+      display:block;
+    }
+
+    /* Square hero photo */
+    .thumb-square{
+      width: 220px;
+      height: 220px;
+      border-radius: 18px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.05);
+      box-shadow: 0 14px 34px rgba(0,0,0,.22);
+    }
+    .thumb-square img{
+      width:100%;
+      height:100%;
+      object-fit: cover;
+      object-position: center 25%;
+      display:block;
+    }
+    @media (max-width: 900px){
+      .thumb-square{ width: 100%; height: 220px; }
+    }
+
+    /* ===== Hanging photo cards ===== */
+    .photo-card{
+      position: relative;
+      padding: 12px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12);
+      box-shadow: 0 14px 40px rgba(0,0,0,.20);
+      overflow: visible;
+    }
+    .photo-card::before{
+      content:"";
+      position:absolute;
+      top:-10px;
+      left: 18px;
+      width: 44px;
+      height: 10px;
+      border-radius: 10px;
+      background: rgba(255,255,255,.18);
+      filter: blur(.2px);
+    }
+    .photo-card::after{
+      content:"";
+      position:absolute;
+      top:-22px;
+      left: 36px;
+      width: 10px;
+      height: 22px;
+      border-radius: 10px;
+      background: rgba(255,255,255,.14);
+    }
+    .photo-card .cap{
+      margin-top: 10px;
+      font-size: .9rem;
+      color: rgba(238,244,255,.76);
+    }
+
+    /* photo grid for hanging cards */
+    .photo-grid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 10px;
+      max-width: 980px;
+    }
+    @media (max-width: 900px){
+      .photo-grid{ grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 520px){
+      .photo-grid{ grid-template-columns: 1fr; }
+    }
+
+    /* hero split */
+    .hero-split{
+      display:flex;
+      gap: 16px;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .hero-split > div:first-child{ flex: 1 1 auto; }
+    .hero-split > div:last-child{ flex: 0 0 auto; }
+    @media (max-width: 900px){
+      .hero-split{ flex-direction: column; align-items: stretch; }
+    }
+
+    /* project media strip */
+    .media-grid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      align-items: stretch;
+    }
+    @media (max-width: 900px){
+      .media-grid{ grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 520px){
+      .media-grid{ grid-template-columns: 1fr; }
+    }
+
+    /* small caption */
+    .cap{
+      margin-top:8px;
+      font-size:.85rem;
+      color: rgba(238,244,255,.72);
+    }
+
+    /* card with image */
+    .card-media{
+      padding: 10px;
+    }
+    .card-media .title{
+      margin:8px 0 2px;
+      font-weight: 700;
+      font-size: .95rem;
+    }
+    .card-media .desc{
+      margin:0;
+      color: rgba(238,244,255,.72);
+      font-size:.85rem;
+      line-height: 1.35;
+    }
     .tags{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap}
     .tag{
       font-size:11px;color:var(--muted);
-      border:1px solid rgba(35,49,80,.55);
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12);
       padding:6px 10px;border-radius:999px;
-      background: rgba(255,255,255,.02);
     }
     .tag.ok{border-color:rgba(124,255,167,.35);color:rgba(124,255,167,.95)}
     .tag.warn{border-color:rgba(255,211,110,.35);color:rgba(255,211,110,.95)}
@@ -159,6 +310,51 @@
     .hr{height:1px;background:rgba(35,49,80,.45);margin:18px 0}
     .note{font-size:12px;color:var(--muted)}
     .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}
+    .section{
+      border:1px solid rgba(255,255,255,.10);
+      background: var(--section-bg);
+      border-radius: var(--r);
+      padding: 16px;
+      margin-top: 16px;
+    }
+
+    .s-hero{
+      --section-bg:
+        radial-gradient(900px 420px at 18% -10%, rgba(79,141,255,.22), transparent 60%),
+        radial-gradient(700px 420px at 95% 10%, rgba(102,240,255,.14), transparent 55%),
+        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.04));
+    }
+    .s-projects{
+      --accent:#22c55e;
+      --section-bg:
+        radial-gradient(700px 320px at 10% 0%, rgba(34,197,94,.18), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.04));
+    }
+    .s-case{
+      --accent:#f59e0b;
+      --section-bg:
+        radial-gradient(700px 320px at 12% 0%, rgba(245,158,11,.18), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.04));
+    }
+    .s-skills{
+      --accent:#a855f7;
+      --section-bg:
+        radial-gradient(700px 320px at 12% 0%, rgba(168,85,247,.18), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.04));
+    }
+    .s-about{
+      --accent:#06b6d4;
+      --section-bg:
+        radial-gradient(700px 320px at 12% 0%, rgba(6,182,212,.18), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.04));
+    }
+    .s-contact{
+      --accent:#ef4444;
+      --section-bg:
+        radial-gradient(700px 320px at 12% 0%, rgba(239,68,68,.18), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.04));
+    }
+    .hero.section{padding:26px 18px}
   </style>
 </head>
 
@@ -166,9 +362,13 @@
   <div class="nav">
     <div class="nav-inner">
       <div class="brand">
-        <div class="logo" aria-hidden="true"></div>
+        <img
+          src="assets/logo.jpeg"
+          alt="MPM — Maruf Reza Project Manager logo"
+          class="brand-logo"
+        />
         <div>
-          <b>PM Sir Maruf Reza</b>
+          <b>Maruf Reza</b>
           <span>Project Manager • Systems Builder</span>
         </div>
       </div>
@@ -183,31 +383,56 @@
   </div>
 
   <div class="wrap">
-    <section class="hero" id="top">
-      <div class="kicker">Execution-first • Field-tested • Outcome-driven</div>
-      <h1>Project Manager & Systems Builder</h1>
-      <p class="sub">
-        I started my career in <b>project management</b> and have delivered around <b>100+ real-world projects</b>.
-        My strengths include <b>strategic problem solving</b>, <b>innovative idea execution</b>, <b>content & campaign design</b>,
-        <b>sports/event operations</b>, and most recently, <b>Google Workspace automation systems</b>.
-      </p>
+    <section class="hero section s-hero" id="top">
+      <div class="hero-split">
+        <div>
+          <div class="kicker">Execution-first • Field-tested • Outcome-driven</div>
+          <h1>Project Manager & Systems Builder</h1>
+          <p class="sub">
+            I started my career in <b>project management</b> and have delivered around <b>100+ real-world projects</b>.
+            My strengths include <b>strategic problem solving</b>, <b>innovative idea execution</b>, <b>content & campaign design</b>,
+            <b>sports/event operations</b>, and most recently, <b>Google Workspace automation systems</b>.
+          </p>
 
-      <div class="cta">
-        <a class="btn primary" href="#projects">View Highlight Projects</a>
-        <a class="btn" href="#contact">Hire / Collaborate</a>
-        <a class="btn" href="#case-studies">See Case Studies</a>
-      </div>
+          <div class="cta">
+            <a class="btn primary" href="#projects">View Highlight Projects</a>
+            <a class="btn" href="#contact">Hire / Collaborate</a>
+            <a class="btn" href="#case-studies">See Case Studies</a>
+          </div>
 
-      <div class="facts">
-        <span class="fact">🇧🇩 Bangladesh • Remote/On-site</span>
-        <span class="fact">🗣️ Bangla + English</span>
-        <span class="fact">⚙️ Automation • Reporting • Ops</span>
-        <span class="fact">🎥 Content + Live Production</span>
+          <div class="facts">
+            <span class="fact">🇧🇩 Bangladesh • Remote/On-site</span>
+            <span class="fact">🗣️ Bangla + English</span>
+            <span class="fact">⚙️ Automation • Reporting • Ops</span>
+            <span class="fact">🎥 Content + Live Production</span>
+          </div>
+        </div>
+        <div class="card" style="padding:12px">
+          <div class="thumb-square">
+            <img src="assets/planning_meeting.jpg" alt="planning meeting">
+          </div>
+          <div class="cap">planning meeting</div>
+        </div>
       </div>
     </section>
 
-    <h2 id="projects">Highlighted Projects</h2>
-    <div class="grid">
+    <section class="section s-projects" id="projects">
+      <h2>Highlighted Projects</h2>
+      <div class="photo-grid">
+        <div class="photo-card">
+          <div class="thumb-wide"><img src="assets/team_meeting.JPG" alt="team meeting"></div>
+          <div class="cap">team meeting</div>
+        </div>
+        <div class="photo-card">
+          <div class="thumb-wide"><img src="assets/live_control.JPG" alt="live control"></div>
+          <div class="cap">live control</div>
+        </div>
+        <div class="photo-card">
+          <div class="thumb-wide"><img src="assets/content_production.jpg" alt="content production"></div>
+          <div class="cap">content production</div>
+        </div>
+      </div>
+      <div class="grid">
       <div class="card">
         <b>Digital Skills for Young Learners — Field Implementation</b>
         <div class="muted">
@@ -268,32 +493,39 @@
           <span class="tag">YouTube / Reels</span>
         </div>
       </div>
-    </div>
+      </div>
+    </section>
 
-    <h2 id="case-studies">Case Studies (Replace with your real proofs)</h2>
-    <div class="two">
+    <section class="section s-case" id="case-studies">
+      <h2>Case Studies — Field-Tested Work & Outcomes</h2>
+      <div class="two">
       <div class="card">
-        <b>Case Study #1 — Automation Reporting</b>
+        <b>Case Study — Automated Reporting & Accountability System</b>
         <div class="muted">
-          <span class="mono">Problem:</span> Manual daily reporting was slow and inconsistent.<br/>
-          <span class="mono">Solution:</span> Form → Sheet → PDF → Auto Email workflow with evidence capture.<br/>
-          <span class="mono">Outcome:</span> Faster reporting, better accountability, less human error.<br/>
-          <span class="mono">Proof:</span> Add Google Drive link / screenshots here.
+          <span class="mono">Problem:</span> Manual daily reporting across teams caused delays, data mismatch, and lack of accountability.<br/>
+          <span class="mono">Solution:</span> Designed an end-to-end automation workflow using Google Forms, Sheets, PDF generation, and automated email delivery with evidence attachment.<br/>
+          <span class="mono">Outcome:</span> • Reporting time reduced significantly  <br/>
+          • Consistent data structure across stakeholders  <br/>
+          • Improved transparency and accountability  <br/>
+          • Reduced human error in daily operations<br/>
+          <span class="mono">Proof:</span> Internal system screenshots and Drive-based report archive.
         </div>
         <div class="tags">
-          <span class="tag ok">Workflow</span>
-          <span class="tag">PDF</span>
-          <span class="tag">Email</span>
+          <span class="tag ok">Automation</span>
+          <span class="tag">Reporting</span>
+          <span class="tag">Google Workspace</span>
         </div>
       </div>
 
       <div class="card">
-        <b>Case Study #2 — Sports Event Operations</b>
+        <b>Case Study — Sports Event Operations & Live Broadcast</b>
         <div class="muted">
-          <span class="mono">Problem:</span> Match-day operations needed smooth timing & audience engagement.<br/>
-          <span class="mono">Solution:</span> Run-sheet, roles, live stream workflow, and commentary plan.<br/>
-          <span class="mono">Outcome:</span> Professional delivery under pressure.<br/>
-          <span class="mono">Proof:</span> Add video link / event album here.
+          <span class="mono">Problem:</span> Match-day operations required precise coordination, live timing control, and audience engagement under pressure.<br/>
+          <span class="mono">Solution:</span> Created a structured run-sheet, assigned operational roles, designed live broadcast workflow, and managed commentary coordination.<br/>
+          <span class="mono">Outcome:</span> • Smooth event execution without delays  <br/>
+          • Professional live broadcast delivery  <br/>
+          • Improved audience engagement and on-ground coordination<br/>
+          <span class="mono">Proof:</span> Event footage, live stream recordings, and photo documentation.
         </div>
         <div class="tags">
           <span class="tag warn">Operations</span>
@@ -301,10 +533,29 @@
           <span class="tag">Broadcast</span>
         </div>
       </div>
-    </div>
 
-    <h2 id="skills">Core Capabilities</h2>
-    <div class="grid">
+      <div class="card">
+        <b>Case Study — Digital Skills Program (Field Implementation)</b>
+        <div class="muted">
+          <span class="mono">Problem:</span> Schools lacked a structured, practical system to introduce digital skills and classroom-based technology use.<br/>
+          <span class="mono">Solution:</span> Implemented a field-level digital skills program using Google Classroom, guided sessions, task-based learning, and reporting workflows.<br/>
+          <span class="mono">Outcome:</span> • Teachers adopted structured digital class delivery  <br/>
+          • Students engaged in practical, supervised learning  <br/>
+          • Clear reporting for administrators and stakeholders<br/>
+          <span class="mono">Proof:</span> Class activity screenshots, session documentation, and implementation reports.
+        </div>
+        <div class="tags">
+          <span class="tag ok">Education</span>
+          <span class="tag">Field Work</span>
+          <span class="tag">Digital Skills</span>
+        </div>
+      </div>
+      </div>
+    </section>
+
+    <section class="section s-skills" id="skills">
+      <h2>Core Capabilities</h2>
+      <div class="grid">
       <div class="card">
         <b>Strategic Problem Solving</b>
         <div class="muted">Break complex problems into execution steps, constraints, and measurable outcomes.</div>
@@ -336,16 +587,32 @@
         </div>
         <div class="note">Tip: Later we can add downloadable PDF portfolio + project screenshots.</div>
       </div>
-    </div>
+      </div>
+    </section>
 
-    <h2 id="about">About</h2>
-    <div class="cols">
+    <section class="section s-about" id="about">
+      <h2>About</h2>
+      <div class="cols">
       <div class="card">
         <b>My Story</b>
         <div class="muted">
           I began my career as a project manager, delivering practical solutions with teams and stakeholders.
           Over time, I expanded into content systems, sports operations, and most recently — automation and reporting systems using Google Workspace.
           My focus is always the same: <b>solve real problems, build systems, and deliver results</b>.
+        </div>
+        <div class="photo-grid">
+          <div class="photo-card">
+            <div class="thumb-wide"><img src="assets/school_session.jpg" alt="school session"></div>
+            <div class="cap">school session</div>
+          </div>
+          <div class="photo-card">
+            <div class="thumb-wide"><img src="assets/group_discussion.JPG" alt="group discussion"></div>
+            <div class="cap">group discussion</div>
+          </div>
+          <div class="photo-card">
+            <div class="thumb-wide"><img src="assets/event_briefing.JPG" alt="event briefing"></div>
+            <div class="cap">event briefing</div>
+          </div>
         </div>
         <div class="hr"></div>
         <div class="muted">
@@ -366,38 +633,38 @@
           <li><b>Phase 4:</b> Automation & reporting systems <small>Forms → Sheets → PDF → Email</small></li>
         </ul>
       </div>
-    </div>
+      </div>
+    </section>
 
-    <h2 id="contact">Contact</h2>
-    <div class="card wide">
+    <section class="section s-contact" id="contact">
+      <h2>Contact</h2>
+      <div class="card wide">
       <div class="muted">Replace the placeholders below with your real links:</div>
       <div class="hr"></div>
       <div class="grid" style="gap:10px">
         <div class="card" style="grid-column:span 12;background:rgba(255,255,255,.02)">
           <b>Email</b>
-          <div class="muted"><a href="mailto:your@email.com">your@email.com</a></div>
+          <div class="muted"><a href="mailto:contact.pitglobal@gmail.com">contact.pitglobal@gmail.com</a></div>
         </div>
         <div class="card" style="grid-column:span 12;background:rgba(255,255,255,.02)">
           <b>WhatsApp</b>
-          <div class="muted"><a href="https://wa.me/8801XXXXXXXXX">wa.me/8801XXXXXXXXX</a></div>
+          <div class="muted"><a href="https://wa.me/8801306117362" target="_blank" rel="noopener noreferrer">wa.me/8801306117362</a></div>
         </div>
         <div class="card" style="grid-column:span 12;background:rgba(255,255,255,.02)">
           <b>LinkedIn</b>
-          <div class="muted"><a href="https://www.linkedin.com/in/yourhandle">linkedin.com/in/yourhandle</a></div>
+          <div class="muted"><a href="https://www.linkedin.com/in/maruf-reza-9b70a82a2/" target="_blank" rel="noopener noreferrer">linkedin.com/in/maruf-reza-9b70a82a2</a></div>
         </div>
         <div class="card" style="grid-column:span 12;background:rgba(255,255,255,.02)">
           <b>YouTube</b>
-          <div class="muted"><a href="https://www.youtube.com/@yourchannel">@yourchannel</a></div>
+          <div class="muted"><a href="https://www.youtube.com/@pitsportstv" target="_blank" rel="noopener noreferrer">youtube.com/@pitsportstv</a></div>
         </div>
       </div>
 
       <div class="hr"></div>
-      <div class="note">
-        After you commit this file, enable GitHub Pages from: <b>Repo → Settings → Pages</b> (Source: main / root).
       </div>
-    </div>
+    </section>
 
-    <div class="footer">© <span id="y"></span> PM Sir Maruf Reza • Built on GitHub Pages</div>
+    <div class="footer">© 2026 PM Sir Maruf Reza — Project Manager & Systems Builder · Built with HTML/CSS · Hosted on GitHub Pages</div>
   </div>
 
   <script>
